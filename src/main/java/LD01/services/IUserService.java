@@ -6,4 +6,6 @@ public interface IUserService {
 	public UserModel findByUserName(String username);
 
 	public UserModel login(String username, String password);
+	
+	public boolean register(UserModel user); 
 }

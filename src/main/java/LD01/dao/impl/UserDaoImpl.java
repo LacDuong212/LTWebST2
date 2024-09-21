@@ -65,25 +65,31 @@ public class UserDaoImpl implements IUserDao {
 	}
 
 	@Override
-	public void insert(UserModel user) {
-		String sql = "insert into Users(id, username, password, avatar, fullname, email, phone, roleid, createDate) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-		try {
-			ps = conn.prepareStatement(sql);
-
-			ps.setInt(1, user.getId());
-			ps.setString(2, user.getUserName());
-			ps.setString(3, user.getPassWord());
-			ps.setString(4, user.getAvatar());
-			ps.setString(5, user.getFullName());
-			ps.setString(6, user.getEmail());
-			ps.setString(7, user.getPhone());
-			ps.setInt(8, user.getRoleid());
-			ps.setDate(9, user.getCreateDate());
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public boolean insert(UserModel user) {
+	    String sql = "insert into Users(username, password, email, createDate) values(?, ?, ?, ?)";
+	    try {
+	        conn = new DBConnectionSQL().getConnection(); // Mở kết nối
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, user.getUserName());
+	        ps.setString(2, user.getPassWord());
+	        ps.setString(3, user.getEmail());
+	        ps.setDate(4, user.getCreateDate());
+	        
+	        int result = ps.executeUpdate();
+	        return result > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace(); // In ra lỗi
+	        return false;
+	    } finally {
+	        // Đóng các đối tượng và kết nối
+	        try {
+	            if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 
 	@Override

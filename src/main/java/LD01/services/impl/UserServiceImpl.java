@@ -21,4 +21,9 @@ public class UserServiceImpl implements IUserService {
 		}
 		return null;
 	}
+
+	@Override
+	public boolean register(UserModel user) {
+		return userDao.insert(user);
+	}
 }
