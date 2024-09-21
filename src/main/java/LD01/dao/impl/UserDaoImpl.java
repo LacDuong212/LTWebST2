@@ -3,7 +3,6 @@ package LD01.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,30 +65,21 @@ public class UserDaoImpl implements IUserDao {
 
 	@Override
 	public boolean insert(UserModel user) {
-	    String sql = "insert into Users(username, password, email, createDate) values(?, ?, ?, ?)";
-	    try {
-	        conn = new DBConnectionSQL().getConnection(); // Mở kết nối
-	        ps = conn.prepareStatement(sql);
-	        ps.setString(1, user.getUserName());
-	        ps.setString(2, user.getPassWord());
-	        ps.setString(3, user.getEmail());
-	        ps.setDate(4, user.getCreateDate());
-	        
-	        int result = ps.executeUpdate();
-	        return result > 0;
-	    } catch (Exception e) {
-	        e.printStackTrace(); // In ra lỗi
-	        return false;
-	    } finally {
-	        // Đóng các đối tượng và kết nối
-	        try {
-	            if (rs != null) rs.close();
-	            if (ps != null) ps.close();
-	            if (conn != null) conn.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
+		String sql = "insert into Users(username, password, email, createDate) values(?, ?, ?, ?)";
+		try {
+			conn = new DBConnectionSQL().getConnection(); // Mở kết nối
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, user.getUserName());
+			ps.setString(2, user.getPassWord());
+			ps.setString(3, user.getEmail());
+			ps.setDate(4, user.getCreateDate());
+
+			int result = ps.executeUpdate();
+			return result > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
@@ -117,6 +107,31 @@ public class UserDaoImpl implements IUserDao {
 			ex.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public boolean checkEmailByUserName(String username, String email) {
+		String sql = "SELECT email FROM Users WHERE username = ?";
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+
+	    try {
+	        conn = new DBConnectionSQL().getConnection();
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, username); 
+	        
+	        rs = ps.executeQuery();
+	        if (rs.next()) {
+	            String emailFromDB = rs.getString("email");
+	            
+	            return emailFromDB.equals(email);
+	        }
+	        return false; 
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
 }

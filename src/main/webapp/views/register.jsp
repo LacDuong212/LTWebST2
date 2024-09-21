@@ -34,21 +34,12 @@
     </form>
     <div>
         <%
-            String success = (String) request.getAttribute("Success");
-            if (success != null) {
-        %>
-            <p style="color: green;"><%= success %></p>
-        <%
-            }
-        %>
-        <%
-            String errorMessage = (String) request.getAttribute("Error");
-            if (errorMessage != null) {
-        %>
-            <p style="color: red;"><%= errorMessage %></p>
-        <%
-            }
-        %>
+			if (request.getAttribute("Message") != null) {
+		%>
+			<p><%=request.getAttribute("Message")%></p>
+		<%
+			}
+		%>
     </div>
 </body>
 <style>

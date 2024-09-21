@@ -26,4 +26,9 @@ public class UserServiceImpl implements IUserService {
 	public boolean register(UserModel user) {
 		return userDao.insert(user);
 	}
+
+	@Override
+	public boolean checkEmailByUserName(String username, String email) {
+		return userDao.checkEmailByUserName(username, email);
+	}
 }

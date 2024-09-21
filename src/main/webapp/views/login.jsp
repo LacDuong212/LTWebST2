@@ -30,7 +30,7 @@
 
 		<div class="container" style="background-color: #f1f1f1">
 			<span>Don't have an account? <a href="/LTWebST2/register">Register here</a></span>
-			<span class="psw">Forgot <a href="#">password?</a></span>
+			<span class="psw"><a href="/LTWebST2/forgotPassword">Forgot password?</a></span>
 			<br>
 			<button type="button" class="cancelbtn">Cancel</button>
 		</div>

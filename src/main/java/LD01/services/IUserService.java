@@ -8,4 +8,6 @@ public interface IUserService {
 	public UserModel login(String username, String password);
 	
 	public boolean register(UserModel user); 
+	
+	public boolean checkEmailByUserName(String username, String email);
 }

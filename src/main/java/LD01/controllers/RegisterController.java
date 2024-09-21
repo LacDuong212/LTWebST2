@@ -33,12 +33,11 @@ public class RegisterController extends HttpServlet {
         boolean isRegistered = service.register(user);
         
         if (isRegistered) {
-        	req.setAttribute("Success", "Registration successful!");
-        	req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
+        	req.setAttribute("Message", "Registration successful!");
         } else {
-            req.setAttribute("Error", "Registration failed, please try again.");
-            req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
+            req.setAttribute("Message", "Registration failed, please try again.");
         }
+        req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
     }
 	
 	@Override
